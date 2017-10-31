@@ -18,7 +18,7 @@ MAAS. If you're using a bridged network setup you'll need to handle network
 configuration to address how you want DHCP/DNS/PXE to be routed.
 
 The install can take some time as it has to install several packages. When it is
-complete you should can access your MAAS node at http://MAASIP/MAAS
+complete you can access your MAAS node at http://MAASIP/MAAS
 
 ## Using MAAS
 See the [MAAS Documentation](https://docs.ubuntu.com/maas/devel/en/) for up to
@@ -34,7 +34,7 @@ date information. A few quick comments
 
 Once PODs are configured you can create them directly from the MAAS interface.
 MAAS will also compose a pod for juju when juju requests a machine.
-Addationally, Juju can bootstrap into a MAAS pod allowing MAAS and the juju
+Additionally, Juju can bootstrap into a MAAS pod allowing MAAS and the juju
 controller to both live inside this LXD on a single machine. Recall that if you
 are doing this to manage external hardware you will have to address more
 advanced networking than is currently handled here.
