@@ -23,7 +23,7 @@ complete you can access your MAAS node at http://MAASIP/MAAS
 ## Using MAAS
 See the [MAAS Documentation](https://docs.ubuntu.com/maas/devel/en/) for up to
 date information. A few quick comments
-- And admin user has been setup, password/login are admin/admin
+- An admin user has been setup, password/login are admin/admin
 - You can use MAAS PODS, but that is not automatically added currently with this
   script. To do so:
   - Go to the PODS page in MAAS
