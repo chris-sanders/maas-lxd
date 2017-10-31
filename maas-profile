@@ -1,0 +1,69 @@
+config:
+  user.network-config: |
+    version: 1
+    config:
+      - type: physical
+        name: eth0
+        subnets:
+          - type: dhcp
+      - type: physical
+        name: eth1
+      - type: bridge
+        name: br0
+        bridge_interfaces:
+          - eth1
+        subnets:
+          - type: dhcp
+  user.user-data: |
+    #cloud-config
+    bootcmd:
+      - ln -s /dev/null /etc/systemd/system/avahi-daemon.service
+    package_upgrade: true
+    packages:
+      - bridge-utils
+      - maas
+      - qemu-kvm
+      - libvirt-bin
+      - virtinst
+    write_files:
+      - content: |
+          <network>
+          <name>maas</name>
+          <forward mode="bridge"/>
+          <bridge name="br0"/>
+          </network>
+        path: /var/lib/libvirt/qemu/network.xml
+    runcmd:
+      - [systemctl, restart, networking.service]
+      - [maas, createadmin, --username=admin, --password=admin, --email=admin]
+      - [adduser, maas, libvirtd]
+      - [skill, -KILL, -u, maas]
+      - [virsh, net-define, /var/lib/libvirt/qemu/network.xml]
+      - [virsh, net-autostart, maas]
+      - [virsh, net-start, maas]
+      - [virsh, pool-define-as, default, dir, --target, /var/lib/libvirt/images/]
+      - [virsh, pool-autostart, default]
+      - [virsh, pool-start, default]
+description: Setus up a bridge in the LXD
+devices:
+  eth0:
+    mtu: "9000"
+    name: eth0
+    nictype: bridged
+    parent: lxdbr0
+    type: nic
+  eth1:
+    mtu: "9000"
+    name: eth1
+    nictype: bridged
+    parent: lxdbr0
+    type: nic
+  kvm:
+    source: /dev/kvm
+    type: unix-char
+  root:
+    path: /
+    pool: default
+    type: disk
+name: maas-profile
+used_by: []
