@@ -59,11 +59,7 @@ devices:
     parent: lxdbr0
     type: nic
   kvm:
-    source: /dev/kvm
+    path: /dev/kvm
     type: unix-char
-  root:
-    path: /
-    pool: default
-    type: disk
 name: maas-profile
 used_by: []

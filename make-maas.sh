@@ -5,7 +5,7 @@ CONTAINER=$1
 echo "Creating container $CONTAINER"
 lxc profile create maas-profile 2> /dev/null
 lxc profile edit maas-profile < maas-profile
-lxc launch ubuntu-xenial $CONTAINER -p maas-profile
+lxc launch ubuntu:16.04 $CONTAINER -p maas-profile
 
 echo "Sleeping to wait for IP"
 sleep 5
