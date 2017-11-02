@@ -1,5 +1,4 @@
 config:
-  security.nesting: true
   user.network-config: |
     version: 1
     config:
