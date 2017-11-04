@@ -1,0 +1,8 @@
+description: Defines a root device
+devices:
+ root:
+    path: /
+    pool: default
+    type: disk
+name: maas-profile
+used_by: []
