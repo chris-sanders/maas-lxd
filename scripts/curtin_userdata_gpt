@@ -1,0 +1,18 @@
+# Manual storage setup
+partitioning_commands:
+  builtin:
+  - curtin
+  - block-meta
+  - custom
+  # MBR Boot
+  builtin_00: ["sh", "-c", "sgdisk -t 1:ef02 /dev/sda"]
+  builtin_01: ["sh", "-c", "sgdisk -t 1:ef02 /dev/sdb"]
+  # Ceph Journal
+  builtin_02: ["sh", "-c", "sgdisk -t 3:f802 /dev/sda"]
+  builtin_03: ["sh", "-c", "sgdisk -t 3:f802 /dev/sdb"]
+  # Ceph OSD
+  builtin_04: ["sh", "-c", "sgdisk -t 4:f800 /dev/sda"]
+  builtin_05: ["sh", "-c", "sgdisk -t 4:f800 /dev/sdb"]
+  # Reload
+  builtin_06: ["sh", "-c", "partprobe"]
+
