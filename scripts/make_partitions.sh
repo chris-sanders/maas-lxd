@@ -8,14 +8,22 @@
 
 MACHINE=$1
 # # Clear the partitions
-maas admin partition delete $MACHINE sda sda-part4
-maas admin partition delete $MACHINE sda sda-part3
-maas admin partition delete $MACHINE sda sda-part2
-maas admin partition delete $MACHINE sda sda-part1
-maas admin partition delete $MACHINE sdb sdb-part4
-maas admin partition delete $MACHINE sdb sdb-part3
-maas admin partition delete $MACHINE sdb sdb-part2
-maas admin partition delete $MACHINE sdb sdb-part1
+for partid in $(maas maas-root partitions read $MACHINE sda |jq '.[] | .id'); do
+  maas maas-root partition delete $MACHINE nvme0n1 $partid
+done
+
+for partid in $(maas maas-root partitions read $MACHINE sdb |jq '.[] | .id'); do
+  maas maas-root partition delete $MACHINE nvme0n1 $partid
+done
+
+# maas admin partition delete $MACHINE sda sda-part4
+# maas admin partition delete $MACHINE sda sda-part3
+# maas admin partition delete $MACHINE sda sda-part2
+# maas admin partition delete $MACHINE sda sda-part1
+# maas admin partition delete $MACHINE sdb sdb-part4
+# maas admin partition delete $MACHINE sdb sdb-part3
+# maas admin partition delete $MACHINE sdb sdb-part2
+# maas admin partition delete $MACHINE sdb sdb-part1
 
 # Setup sda
 maas admin block-device set-boot-disk $MACHINE sdb
