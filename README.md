@@ -3,7 +3,6 @@ This is a simple project to provide MAAS with KVM POD capability in a LXD contai
 
 ## Getting Started
 - LXD must be installed and working. [LXD Install Guide](https://linuxcontainers.org/lxd/getting-started-cli/)
-- KVM must be installed and working. [KVM Install Guide](https://help.ubuntu.com/community/KVM/Installation)
 
 ## Running
 Run the make-maas.sh and name your MAAS container.
