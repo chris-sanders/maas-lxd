@@ -11,9 +11,4 @@ partitioning_commands:
   # MBR Boot
   builtin_00: ["sh", "-c", "sgdisk -t 1:ef02 /dev/sda"]
   builtin_01: ["sh", "-c", "sgdisk -t 1:ef02 /dev/sdb"]
-  # # Ceph Journal (bluestore, partitions already exist)
-  # builtin_02: ["sh", "-c", 'sgdisk -t "3:4FBD7E29-9D25-41B8-AFD0-062C0CEFF05D" -c "3:ceph data" -t "4:CAFECAFE-9B03-4F30-B4C6-B4B80CEFF106" -c "4:ceph block" /dev/sda']
-  # builtin_03: ["sh", "-c", 'sgdisk -t "3:4FBD7E29-9D25-41B8-AFD0-062C0CEFF05D" -c "3:ceph data" -t "4:CAFECAFE-9B03-4F30-B4C6-B4B80CEFF106" -c "4:ceph block" /dev/sdb']
-  # # Reload
-  # builtin_06: ["sh", "-c", "partprobe"]
 
