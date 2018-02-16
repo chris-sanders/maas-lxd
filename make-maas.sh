@@ -20,7 +20,7 @@ else
 fi
 
 echo "Sleeping to wait for IP"
-sleep 5
+sleep 10
 
 # Setup LXD forward for pxe requests
 # TODO: Make this work on 2.0.x stable LXC
