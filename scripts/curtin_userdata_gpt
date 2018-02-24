@@ -11,4 +11,6 @@ partitioning_commands:
   # MBR Boot
   builtin_00: ["sh", "-c", "sgdisk -t 1:ef02 /dev/sda"]
   builtin_01: ["sh", "-c", "sgdisk -t 1:ef02 /dev/sdb"]
+  # Reload
+  builtin_06: ["sh", "-c", "partprobe"]
 
