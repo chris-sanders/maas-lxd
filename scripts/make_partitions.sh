@@ -14,7 +14,7 @@ done
 
 # https://bugs.launchpad.net/maas/+bug/1712505
 maas admin block-device set-boot-disk $MACHINE sdc
-maas admin partitions create $MACHINE sdc size=5M
+maas admin partitions create $MACHINE sdc size=50M
 
 # Setup sda
 # maas admin block-device set-boot-disk $MACHINE sdb
