@@ -34,4 +34,4 @@ else
     lxc network set lxdbr0 raw.dnsmasq dhcp-boot=pxelinux.0,$CONTAINER,$IPADDRESS && systemctl restart lxd.service
 fi
 
-echo "MAAS will become available at: http://$IPADDRESS/MAAS with user/password admin/admin"
+echo "MAAS will become available at: http://$IPADDRESS:5240/MAAS with user/password admin/admin"

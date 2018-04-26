@@ -6,6 +6,8 @@ This is a simple project to provide MAAS with KVM POD capability in a LXD contai
 - KVM must be installed and working. [KVM Install Guide](https://help.ubuntu.com/community/KVM/Installation)
 
 ## Running
+If using a version of lxd that supports storage pools (>2.0), ensure that the pool name in 'root-device' matches what you have in `lxc storage list`
+
 Run the make-maas.sh and name your MAAS container.
 ```
 ./make-maas.sh maas
@@ -18,7 +20,7 @@ MAAS. If you're using a bridged network setup you'll need to handle network
 configuration to address how you want DHCP/DNS/PXE to be routed.
 
 The install can take some time as it has to install several packages. When it is
-complete you can access your MAAS node at http://MAASIP/MAAS
+complete you can access your MAAS node at http://MAASIP:5240/MAAS
 
 ## Using MAAS
 See the [MAAS Documentation](https://docs.ubuntu.com/maas/devel/en/) for up to
