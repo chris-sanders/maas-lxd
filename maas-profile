@@ -46,6 +46,8 @@ config:
       - [virsh, net-define, /var/lib/libvirt/qemu/network.xml]
       - [virsh, net-autostart, maas]
       - [virsh, net-start, maas]
+      - [virsh, net-destroy, default]
+      - [virsh, net-undefine, default]
       - [virsh, pool-define-as, default, dir, --target, /var/lib/libvirt/images/]
       - [virsh, pool-autostart, default]
       - [virsh, pool-start, default]
