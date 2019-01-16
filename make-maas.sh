@@ -51,7 +51,17 @@ then
     echo "To install the backport: apt install -t xenial-backports lxc lxc-client"
 else
     echo "Setting up pxe redirect for IP $IPADDRESS"
-    lxc network set lxdbr0 raw.dnsmasq dhcp-boot=pxelinux.0,$CONTAINER,$IPADDRESS && systemctl restart lxd.service
+    if lxc network set lxdbr0 raw.dnsmasq dhcp-boot=pxelinux.0,$CONTAINER,$IPADDRESS
+    then
+        if snap services | grep -e '^lxd.daemon\s\+enabled\s\+active$' > /dev/null 2>&1
+        then
+            # Snap-based LXD.  This appears to be safe.  (Thanks csanders)
+            systemctl reload snap.lxd.daemon
+        else
+            # Assume non-snap LXD
+            systemctl restart lxd.service
+        fi
+    fi
 fi
 
 echo "MAAS will become available at: http://$IPADDRESS:5240/MAAS with user/password admin/admin"

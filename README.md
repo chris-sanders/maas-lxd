@@ -4,6 +4,8 @@ This is a simple project to provide MAAS with KVM POD capability in a LXD contai
 ## Getting Started
 - LXD must be installed and working. [LXD Install Guide](https://linuxcontainers.org/lxd/getting-started-cli/)
 - KVM must be installed and working. [KVM Install Guide](https://help.ubuntu.com/community/KVM/Installation)
+- If running LXC version 3.0 or above, ensure that you have an LXD
+  storage pool named "default" set up; this project assumes it is.
 
 ## Running
 If using a version of lxd that supports storage pools (>2.0), ensure that the pool name in 'root-device' matches what you have in `lxc storage list`
