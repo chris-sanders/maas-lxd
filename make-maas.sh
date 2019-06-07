@@ -29,39 +29,37 @@ lxc profile edit maas-profile < maas-profile
 if [ $MAJOR -eq 3 ]
 then
     # v3 expects pool name, use default
-    lxc launch ubuntu:16.04 $CONTAINER -p maas-profile -s default
+    lxc launch ubuntu:18.04 $CONTAINER -p maas-profile -s default
 elif [ $MAJOR -eq 2 && $MINOR -eq 0 ]
 then
-    lxc launch ubuntu:16.04 $CONTAINER -p maas-profile 
+    lxc launch ubuntu:18.04 $CONTAINER -p maas-profile 
 else
     lxc profile create root-device 2> /dev/null
     lxc profile edit root-device < root-device
-    lxc launch ubuntu:16.04 $CONTAINER -p maas-profile -p root-device
+    lxc launch ubuntu:18.04 $CONTAINER -p maas-profile -p root-device
 fi
 
 echo "Sleeping to wait for IP"
 sleep 10
 
 # Setup LXD forward for pxe requests
-# TODO: Make this work on 2.0.x stable LXC
 IPADDRESS=$(lxc info $CONTAINER | awk -F"[: \t]+" '/eth0:.*inet[^6]/ {print $4}')
-if [[( $MAJOR -eq 2 || $MAJOR -eq 3 ) && $MINOR -eq 0 ]]
+
+if lxc network set lxdbr0 raw.dnsmasq dhcp-boot=pxelinux.0,$CONTAINER,$IPADDRESS
 then
-    echo "LXC Stable branch not scripted for dnsmasq settings PXE will not work"
-    echo "To install the backport: apt install -t xenial-backports lxc lxc-client"
-else
-    echo "Setting up pxe redirect for IP $IPADDRESS"
-    if lxc network set lxdbr0 raw.dnsmasq dhcp-boot=pxelinux.0,$CONTAINER,$IPADDRESS
+    echo "pxe redirect setup for IP $IPADDRESS"
+    
+    if snap services | grep -e '^lxd.daemon\s\+enabled\s\+active' > /dev/null 2>&1
     then
-        if snap services | grep -e '^lxd.daemon\s\+enabled\s\+active' > /dev/null 2>&1
-        then
-            # Snap-based LXD.  This appears to be safe.  (Thanks csanders)
-            systemctl reload snap.lxd.daemon
-        else
-            # Assume non-snap LXD
-            systemctl restart lxd.service
-        fi
+        # Snap-based LXD.  This appears to be safe.  (Thanks csanders)
+        systemctl reload snap.lxd.daemon
+    else
+        # Assume non-snap LXD
+        systemctl restart lxd.service
     fi
+else
+    echo "No lxdbr0 found, unable to setup pxe redirect"
+    echo "Manual config of raw.dnsmasq for pxe redirect needs to be done"
 fi
 
 echo "MAAS will become available at: http://$IPADDRESS:5240/MAAS with user/password admin/admin"

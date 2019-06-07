@@ -1,7 +1,7 @@
 config:
   raw.lxc: |-
     lxc.cgroup.devices.allow = c 10:237 rwm
-    lxc.aa_profile = unconfined
+    lxc.apparmor.profile = unconfined
     lxc.cgroup.devices.allow = b 7:* rwm
   security.privileged: "true"
   user.network-config: |
@@ -23,6 +23,11 @@ config:
     #cloud-config
     bootcmd:
       - ln -s /dev/null /etc/systemd/system/avahi-daemon.service
+    apt:
+      sources:
+        # https://bugs.launchpad.net/maas/+bug/1740935
+        maas-dev:
+          source: "ppa:maas/next"
     package_upgrade: true
     packages:
       - bridge-utils
@@ -41,8 +46,8 @@ config:
     runcmd:
       - [systemctl, restart, networking.service]
       - [maas, createadmin, --username=admin, --password=admin, --email=admin]
-      - [adduser, maas, libvirtd]
-      - [skill, -KILL, -u, maas]
+      - [adduser, maas, libvirt]
+      - [systemctl, restart, maas-rackd]
       - [virsh, net-define, /var/lib/libvirt/qemu/network.xml]
       - [virsh, net-autostart, maas]
       - [virsh, net-start, maas]
