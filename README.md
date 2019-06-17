@@ -28,22 +28,16 @@ complete you can access your MAAS node at http://MAASIP:5240/MAAS
 See the [MAAS Documentation](https://docs.ubuntu.com/maas/devel/en/) for up to
 date information. A few quick comments
 - An admin user has been setup, password/login are admin/admin
-- You can use MAAS PODS, but that is not automatically added currently with this
-  script. To do so:
-  - Go to the PODS page in MAAS
-  - Select "Add pod"
-  - Select Virsh (virtual system) as the Pod type
-  - For Virsh address use "qemu:///system"
-  - Optionally name your pod
+- You can use MAAS PODS, but one is not automatically added currently with this
+  script. To do so run `create-vm-pod.sh $container-name` after MAAS is up and has 
+  been configured with images. This will create a pod and an initial VM.
 
 Once PODs are configured you can create them directly from the MAAS interface.
-MAAS will also compose a pod for juju when juju requests a machine.
-Additionally, Juju can bootstrap into a MAAS pod allowing MAAS and the juju
-controller to both live inside this LXD on a single machine. Recall that if you
-are doing this to manage external hardware you will have to address more
-advanced networking than is currently handled here.
+MAAS will also compose a pod for juju when juju requests a machine. However
+automatic machine creation is currently not working https://bugs.launchpad.net/maas/+bug/1740935
+on stable branches, it appears version 2.6 in development it is currently
+working.
+
 
 For more information on using Juju with MAAS see [Using a MAAS
 cloud](https://jujucharms.com/docs/devel/clouds-maas) in the juju documentation.
-
-

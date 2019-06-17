@@ -26,8 +26,10 @@ config:
     apt:
       sources:
         # https://bugs.launchpad.net/maas/+bug/1740935
-        maas-dev:
-          source: "ppa:maas/next"
+        # maas-dev:
+        #   source: "ppa:maas/next"
+        # maas-stable:
+        #   source: "ppa:maas/stable"
     package_upgrade: true
     packages:
       - bridge-utils
@@ -48,6 +50,7 @@ config:
       - [maas, createadmin, --username=admin, --password=admin, --email=admin]
       - [adduser, maas, libvirt]
       - [systemctl, restart, maas-rackd]
+      - [systemctl, restart, maas-regiond]
       - [virsh, net-define, /var/lib/libvirt/qemu/network.xml]
       - [virsh, net-autostart, maas]
       - [virsh, net-start, maas]
