@@ -74,6 +74,9 @@ devices:
   kvm:
     path: /dev/kvm
     type: unix-char
+  vhost-net:
+    path: /dev/vhost-net
+    type: unix-char
   loop0:
     path: /dev/loop0
     type: unix-block
